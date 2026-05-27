@@ -566,6 +566,27 @@ async function exportEntries() {
 /* ════════════════════════════════════════
    INIT
 ════════════════════════════════════════ */
+/* ════════════════════════════════════════
+   INSTALACIÓN PWA
+════════════════════════════════════════ */
+let deferredInstallPrompt = null;
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  /* Solo mostrar el banner si NO está instalada como standalone */
+  if (window.matchMedia('(display-mode: standalone)').matches) return;
+  const banner = $('install-banner');
+  if (banner) banner.hidden = false;
+});
+
+window.addEventListener('appinstalled', () => {
+  deferredInstallPrompt = null;
+  const banner = $('install-banner');
+  if (banner) banner.hidden = true;
+  showToast('¡Refugio instalado! Ábrelo desde tu pantalla de inicio');
+});
+
 async function init() {
   await db.open();
 
@@ -717,6 +738,15 @@ async function init() {
     navigator.clipboard.writeText(getSQL())
       .then(() => showToast('SQL copiado al portapapeles'))
       .catch(() => showToast('No se pudo copiar'));
+  });
+
+  /* ── Instalar PWA ── */
+  $('btn-install')?.addEventListener('click', async () => {
+    if (!deferredInstallPrompt) return;
+    deferredInstallPrompt.prompt();
+    const { outcome } = await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt = null;
+    if (outcome === 'accepted') $('install-banner').hidden = true;
   });
 
   /* ── Exportar / Borrar ── */
