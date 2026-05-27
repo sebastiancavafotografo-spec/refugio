@@ -156,14 +156,15 @@ input, textarea {
    NAV INFERIOR
 ═══════════════════════════════════════════ */
 .bottom-nav {
-  height: var(--nav-h);
   background: var(--cream);
   border-top: 1px solid var(--border);
   display: flex;
   align-items: stretch;
   flex-shrink: 0;
   z-index: 10;
-  padding-bottom: env(safe-area-inset-bottom, 0);
+  /* Altura fija + espacio para barra de gestos Android */
+  padding-bottom: env(safe-area-inset-bottom, 8px);
+  min-height: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px));
 }
 
 .nav-item {
@@ -172,16 +173,32 @@ input, textarea {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 5px;
   color: var(--text-soft);
   font-size: 0.68rem;
   font-weight: 400;
   letter-spacing: 0.02em;
   transition: color 0.2s var(--ease);
   -webkit-tap-highlight-color: transparent;
+  padding-top: 10px;
+  padding-bottom: 4px;
 }
 
 .nav-item span { line-height: 1; }
+
+/* Forzar stroke en CSS (más fiable en WebView Android) */
+.nav-item svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  stroke: var(--text-soft);
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  overflow: visible;
+}
 
 .nav-item.active {
   color: var(--sage-dark);
@@ -191,7 +208,12 @@ input, textarea {
   stroke: var(--sage-dark);
 }
 
-.nav-item:hover:not(.active) { color: var(--text); }
+.nav-item:hover:not(.active) {
+  color: var(--text);
+}
+.nav-item:hover:not(.active) svg {
+  stroke: var(--text);
+}
 
 /* ═══════════════════════════════════════════
    JARDÍN
