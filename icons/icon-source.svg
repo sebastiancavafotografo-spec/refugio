@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Fondo crema con esquinas redondeadas -->
+  <rect width="512" height="512" rx="96" fill="#FAF8F5"/>
+
+  <!-- Tierra / suelo -->
+  <ellipse cx="256" cy="344" rx="72" ry="20" fill="#C4A882" opacity="0.55"/>
+
+  <!-- Tallo principal -->
+  <path d="M256 342 Q252 300 256 212" stroke="#4D7A47" stroke-width="14"
+        fill="none" stroke-linecap="round"/>
+
+  <!-- Hoja izquierda -->
+  <path d="M254 284
+           C238 268 200 260 192 238
+           C216 232 254 250 256 270 Z"
+        fill="#6B9E64"/>
+
+  <!-- Hoja derecha -->
+  <path d="M258 258
+           C274 242 312 234 320 212
+           C296 206 258 224 256 244 Z"
+        fill="#6B9E64" opacity="0.82"/>
+
+  <!-- Brote superior (bud) -->
+  <ellipse cx="256" cy="204" rx="13" ry="18" fill="#6B9E64"/>
+  <ellipse cx="256" cy="196" rx="9" ry="12" fill="#4D7A47"/>
+</svg>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#FAF8F5" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Refugio" />
+  <meta name="description" content="Tu refugio digital de reflexión y paz mental" />
+  <title>Refugio</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div id="app" class="app">
+
+  <!-- ── HEADER ── -->
+  <header class="header" role="banner">
+    <div class="header-inner">
+      <span class="logo">Refugio</span>
+      <div style="display:flex;align-items:center;gap:4px;">
+        <button class="icon-btn" id="theme-toggle" aria-label="Cambiar tema" aria-pressed="false" title="Modo oscuro">
+          <svg class="icon-sun" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+        <button class="icon-btn" id="silence-toggle" aria-label="Alternar modo silencio" aria-pressed="false" title="Modo Silencio">
+          <svg class="icon-bell" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+          </svg>
+          <svg class="icon-bell-off" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            <path d="M18.63 13A17.89 17.89 0 0118 8"/>
+            <path d="M6.26 6.26A5.86 5.86 0 006 8c0 7-3 9-3 9h14"/>
+            <path d="M18 8a6 6 0 0 0-9.33-4.99"/>
+            <line x1="1" y1="1" x2="23" y2="23"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── MAIN ── -->
+  <main class="main" role="main">
+
+    <!-- JARDÍN -->
+    <section id="view-garden" class="view active" aria-label="Mi jardín">
+      <div class="garden-wrapper">
+        <div class="garden-art" id="garden-art" aria-hidden="true"></div>
+        <p class="garden-stage-label" id="garden-stage-label"></p>
+        <p class="garden-count" id="garden-count"></p>
+      </div>
+      <div class="entries-preview">
+        <p class="entries-preview-title" id="entries-preview-title" hidden>Últimas reflexiones</p>
+        <div id="entries-list" class="entries-list" role="list"></div>
+        <p class="entries-empty" id="entries-empty">
+          Tu jardín espera tu primera reflexión.
+        </p>
+      </div>
+    </section>
+
+    <!-- ESCRIBIR -->
+    <section id="view-write" class="view" aria-label="Escribir una entrada">
+      <div class="write-header">
+        <p class="write-date" id="write-date"></p>
+      </div>
+      <div class="write-body">
+        <textarea
+          id="entry-textarea"
+          class="entry-textarea"
+          placeholder="¿Qué hay en tu mente ahora mismo?&#10;&#10;Este espacio es solo tuyo..."
+          aria-label="Escribe tu reflexión"
+          autocorrect="on"
+          spellcheck="true"
+        ></textarea>
+      </div>
+      <div class="write-footer">
+        <div class="write-footer-left">
+          <button class="btn-mic" id="btn-mic" title="Dictar por voz" aria-label="Entrada de voz">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="3" width="6" height="11" rx="3"/>
+              <path d="M5 11c0 3.87 3.13 7 7 7s7-3.13 7-7"/>
+              <line x1="12" y1="18" x2="12" y2="22"/>
+              <line x1="8" y1="22" x2="16" y2="22"/>
+            </svg>
+          </button>
+          <span class="word-count" id="word-count" aria-live="polite">0 palabras</span>
+        </div>
+        <button class="btn-save" id="btn-save">Guardar en tu refugio</button>
+      </div>
+
+      <!-- Respuesta IA -->
+      <div class="ai-response" id="ai-response" aria-live="polite" hidden>
+        <div class="ai-saved" id="ai-saved" hidden>
+          <span class="ai-saved-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </span>
+          <p class="ai-saved-text" id="ai-saved-text">Guardado en tu refugio</p>
+        </div>
+        <div class="ai-actions" id="ai-actions" hidden>
+          <p class="ai-actions-intro">Para este momento, quizás ayude:</p>
+          <ul class="micro-action-list" id="micro-action-list" aria-label="Micro-acciones sugeridas"></ul>
+        </div>
+      </div>
+
+      <!-- Recompensa Unsplash -->
+      <div class="reward-card" id="reward-card" hidden>
+        <button class="reward-dismiss" id="reward-dismiss" aria-label="Cerrar imagen">&times;</button>
+        <img class="reward-img" id="reward-img" src="" alt="" loading="lazy" />
+        <div class="reward-footer">
+          <p class="reward-caption">Tu jardín ha crecido</p>
+          <a class="reward-attribution" id="reward-attribution" href="#" target="_blank" rel="noopener noreferrer">Foto: Unsplash</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- REFLEXIONES / INSIGHTS -->
+    <section id="view-insights" class="view" aria-label="Reflexiones del mes">
+      <div class="insights-inner">
+        <header class="insights-header">
+          <h2 class="insights-title">Tu mes en palabras</h2>
+          <p class="insights-month" id="insights-month"></p>
+        </header>
+
+        <div class="insight-card">
+          <p class="insight-card-label">Tu momento de claridad</p>
+          <p class="insight-card-value" id="insight-time-value">—</p>
+          <p class="insight-card-note" id="insight-time-note">Escribe más para descubrirlo</p>
+        </div>
+
+        <div class="insight-card">
+          <p class="insight-card-label">Palabras que repites este mes</p>
+          <div class="word-display" id="word-display" aria-label="Palabras frecuentes"></div>
+        </div>
+
+        <div class="insight-card">
+          <p class="insight-card-label">Tu ritmo de escritura</p>
+          <div class="rhythm-grid" id="rhythm-grid" aria-label="Días con entradas este mes"></div>
+          <p class="rhythm-legend">● días con reflexión</p>
+        </div>
+
+        <div class="insight-card insight-card--highlight">
+          <p class="insight-message" id="insight-message">Comienza a escribir para ver tu resumen del mes.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CALMA / SETTINGS -->
+    <section id="view-settings" class="view" aria-label="Configuración">
+      <div class="settings-inner">
+        <header class="settings-header">
+          <h2 class="settings-title">Espacio de calma</h2>
+          <p class="settings-subtitle">Refugio vive en este dispositivo.<br>Solo tú puedes leer lo que escribes.</p>
+        </header>
+
+        <div class="settings-group">
+          <p class="settings-group-title">Apariencia</p>
+          <div class="setting-row">
+            <div class="setting-row-text">
+              <p class="setting-name">Modo oscuro</p>
+              <p class="setting-desc">Paleta cálida oscura para leer de noche</p>
+            </div>
+            <label class="toggle" for="toggle-darkmode" aria-label="Activar modo oscuro">
+              <input type="checkbox" id="toggle-darkmode" class="toggle-input" />
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <p class="settings-group-title">Notificaciones</p>
+
+          <div class="setting-row">
+            <div class="setting-row-text">
+              <p class="setting-name">Recordatorio diario</p>
+              <p class="setting-desc">En tu momento óptimo de escritura</p>
+            </div>
+            <label class="toggle" for="toggle-notifications" aria-label="Activar recordatorio diario">
+              <input type="checkbox" id="toggle-notifications" class="toggle-input" />
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </label>
+          </div>
+
+          <div class="setting-row">
+            <div class="setting-row-text">
+              <p class="setting-name">Silencio en fin de semana</p>
+              <p class="setting-desc">Sin recordatorios sábados y domingos</p>
+            </div>
+            <label class="toggle" for="toggle-weekend" aria-label="Silencio fin de semana">
+              <input type="checkbox" id="toggle-weekend" class="toggle-input" />
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </label>
+          </div>
+
+          <div class="setting-row">
+            <div class="setting-row-text">
+              <p class="setting-name">Modo Silencio total</p>
+              <p class="setting-desc">Ningún recordatorio hasta que lo desactives</p>
+            </div>
+            <label class="toggle" for="toggle-silence" aria-label="Modo silencio total">
+              <input type="checkbox" id="toggle-silence" class="toggle-input" />
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <p class="settings-group-title">IA real (opcional)</p>
+          <p class="settings-group-desc">Añade tu clave de Anthropic para activar sugerencias inteligentes y resúmenes mensuales reales.</p>
+          <div class="api-key-row">
+            <input type="password" id="api-key-input" class="api-key-input" placeholder="sk-ant-..." autocomplete="off" spellcheck="false" aria-label="Clave API de Anthropic" />
+            <button class="btn-secondary" id="btn-save-api-key">Guardar</button>
+          </div>
+          <p class="api-key-status" id="api-key-status" aria-live="polite"></p>
+        </div>
+
+        <div class="settings-group">
+          <p class="settings-group-title">Imágenes de recompensa (Unsplash)</p>
+          <p class="settings-group-desc">Muestra una imagen botánica al guardar cada entrada. Crea tu clave gratis en <a class="text-link" href="https://unsplash.com/developers" target="_blank" rel="noopener noreferrer">unsplash.com/developers</a>.</p>
+          <div class="api-key-row">
+            <input type="password" id="unsplash-key-input" class="api-key-input" placeholder="Tu Access Key..." autocomplete="off" spellcheck="false" aria-label="Clave de Unsplash" />
+            <button class="btn-secondary" id="btn-save-unsplash">Guardar</button>
+          </div>
+          <p class="api-key-status" id="unsplash-key-status" aria-live="polite"></p>
+        </div>
+
+        <div class="settings-group">
+          <p class="settings-group-title">Mis datos</p>
+          <div class="setting-row">
+            <div class="setting-row-text">
+              <p class="setting-name">Exportar reflexiones</p>
+              <p class="setting-desc">Descarga tus entradas como texto</p>
+            </div>
+            <button class="btn-secondary btn--sm" id="btn-export">Exportar</button>
+          </div>
+          <div class="setting-row">
+            <div class="setting-row-text">
+              <p class="setting-name">Borrar todo</p>
+              <p class="setting-desc">Esta acción no se puede deshacer</p>
+            </div>
+            <button class="btn-danger btn--sm" id="btn-clear">Borrar</button>
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <p class="settings-group-title">Sincronización en la nube (Supabase)</p>
+          <p class="settings-group-desc">Guarda tus reflexiones cifradas en la nube para acceder desde otros dispositivos. <strong>Gratis</strong> con Supabase.</p>
+          <div class="sync-inputs">
+            <input type="text" id="sb-url-input" class="api-key-input" placeholder="https://xxxx.supabase.co" autocomplete="off" spellcheck="false" aria-label="URL de Supabase" />
+            <input type="password" id="sb-key-input" class="api-key-input" placeholder="Clave anon..." autocomplete="off" spellcheck="false" aria-label="Clave anon de Supabase" />
+          </div>
+          <div class="sync-actions">
+            <button class="btn-secondary" id="btn-connect-supabase">Conectar</button>
+            <button class="btn-secondary" id="btn-sync-now" disabled>Sincronizar</button>
+            <button class="btn-secondary btn--sm" id="btn-copy-sql" title="Copiar SQL del esquema">Copiar SQL</button>
+          </div>
+          <p class="api-key-status" id="sb-status" aria-live="polite"></p>
+        </div>
+
+        <p class="settings-footer-note">v1.1 · Con cariño, para ti</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── NAV INFERIOR ── -->
+  <nav class="bottom-nav" role="navigation" aria-label="Navegación principal">
+    <button class="nav-item active" data-view="garden" aria-label="Mi jardín" aria-current="page">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22V12"/>
+        <path d="M12 12C12 6.5 6.5 2 1 3c0 5.5 3.5 10 11 9"/>
+        <path d="M12 12c0-5.5 5.5-9.5 11-8.5-1 5.5-4.5 9.5-11 8.5"/>
+      </svg>
+      <span>Jardín</span>
+    </button>
+    <button class="nav-item" data-view="write" aria-label="Escribir" aria-current="false">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+      </svg>
+      <span>Escribir</span>
+    </button>
+    <button class="nav-item" data-view="insights" aria-label="Reflexiones del mes" aria-current="false">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 6v6l4 2"/>
+      </svg>
+      <span>Mes</span>
+    </button>
+    <button class="nav-item" data-view="settings" aria-label="Calma" aria-current="false">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+      <span>Calma</span>
+    </button>
+  </nav>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" hidden></div>
+
+</div>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

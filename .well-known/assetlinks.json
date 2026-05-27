@@ -1,0 +1,10 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "app.refugio.diario",
+    "sha256_cert_fingerprints": [
+      "D2:54:54:71:F0:58:E0:F4:FF:37:80:39:D0:A4:E0:0A:DC:13:6A:4B:38:9C:75:95:F6:88:C5:10:5B:F8:36:65"
+    ]
+  }
+}]

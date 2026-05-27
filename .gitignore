@@ -1,0 +1,10 @@
+node_modules/
+package-lock.json
+generate-icons.js
+*.keystore
+*.jks
+*.ks
+twa-manifest.json
+.gradle/
+build/
+android/
